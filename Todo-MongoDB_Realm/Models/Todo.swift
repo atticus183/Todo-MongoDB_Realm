@@ -33,4 +33,10 @@ extension Todo {
             realm.add(todo)
         }
     }
+
+    static func delete(in realm: Realm, todo: Todo) {
+        try! realm.write {
+            realm.delete(todo)
+        }
+    }
 }

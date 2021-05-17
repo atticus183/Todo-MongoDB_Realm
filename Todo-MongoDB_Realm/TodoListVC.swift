@@ -129,13 +129,14 @@ extension TodoListVC: UITableViewDataSource, UITableViewDelegate {
         return cell
     }
 
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        let numberOfTodos = todos?.count ?? 0
-        return "\(numberOfTodos) todos"
-    }
-
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 25
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        switch editingStyle {
+        case .delete:
+            guard let todo = todos?[indexPath.row] else { return }
+            Todo.delete(in: realm, todo: todo)
+        default:
+            return
+        }
     }
 }
 
