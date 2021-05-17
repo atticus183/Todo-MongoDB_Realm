@@ -27,6 +27,21 @@ class Todo: Object {
 }
 
 extension Todo {
+    var dateFormatter: DateFormatter {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .long
+        return formatter
+    }
+
+    var dateCreatedFormatted: String {
+        dateFormatter.string(from: self.dateCreated)
+    }
+
+    var dateCompletedFormatted: String {
+        guard let dateCompleted = self.dateCompleted else { return "Not Completed" }
+        return dateFormatter.string(from: dateCompleted)
+    }
+
     static func add(in realm: Realm, text: String) {
         try! realm.write {
             let todo = Todo(title: text)
@@ -37,6 +52,12 @@ extension Todo {
     static func delete(in realm: Realm, todo: Todo) {
         try! realm.write {
             realm.delete(todo)
+        }
+    }
+
+    static func toggleCompleted(in realm: Realm, todo: Todo) {
+        try! realm.write {
+            todo.isCompleted.toggle()
         }
     }
 }
