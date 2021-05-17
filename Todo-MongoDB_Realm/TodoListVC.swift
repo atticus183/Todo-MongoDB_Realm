@@ -62,11 +62,16 @@ class TodoListVC: UIViewController {
         view.addSubview(addButton)
         view.addSubview(todoTableView)
         setupConstraints()
+
+        addNotificationListener()
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    deinit {
+        notificationToken?.invalidate()
+    }
 
+    private func addNotificationListener() {
+        //https://docs.mongodb.com/realm/sdk/ios/examples/react-to-changes/
         notificationToken = todos?.observe { [weak self] changes in
             switch changes {
             case .initial:
