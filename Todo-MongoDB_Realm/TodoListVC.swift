@@ -38,7 +38,7 @@ class TodoListVC: UIViewController {
 
     let todoTableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .insetGrouped)
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "TodoCell")
+        tableView.register(TodoCell.self, forCellReuseIdentifier: TodoCell.identifier)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.tableFooterView = UIView()  //removes empty rows
         return tableView
@@ -79,12 +79,9 @@ class TodoListVC: UIViewController {
             case .update(_, let deletions, let insertions, let modifications):
                 self?.todoTableView.performBatchUpdates({
                     // Always apply updates in the following order: deletions, insertions, then modifications.
-                    self?.todoTableView.deleteRows(at: deletions.map({ IndexPath(row: $0, section: 0)}),
-                                                   with: .automatic)
-                    self?.todoTableView.insertRows(at: insertions.map({ IndexPath(row: $0, section: 0) }),
-                                                   with: .automatic)
-                    self?.todoTableView.reloadRows(at: modifications.map({ IndexPath(row: $0, section: 0) }),
-                                                   with: .automatic)
+                    self?.todoTableView.deleteRows(at: deletions.map({ IndexPath(row: $0, section: 0)}), with: .automatic)
+                    self?.todoTableView.insertRows(at: insertions.map({ IndexPath(row: $0, section: 0) }), with: .automatic)
+                    self?.todoTableView.reloadRows(at: modifications.map({ IndexPath(row: $0, section: 0) }), with: .automatic)
                 })
             case .error(let error):
                 fatalError("\(error)")
@@ -123,15 +120,9 @@ extension TodoListVC: UITableViewDataSource, UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "TodoCell", for: indexPath)
-        cell.selectionStyle = .none
+        let cell = tableView.dequeueReusableCell(withIdentifier: TodoCell.identifier, for: indexPath) as! TodoCell
         guard let todo = todos?[indexPath.row] else { return UITableViewCell() }
-        let text = NSAttributedString(string: todo.title,
-                                      attributes: todo.isCompleted
-                                        ? [.strikethroughStyle: true,
-                                           .foregroundColor: UIColor.gray]
-                                        : [:])
-        cell.textLabel?.attributedText = text
+        cell.todo = todo
         return cell
     }
 

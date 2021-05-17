@@ -17,6 +17,7 @@
 		124A90472651B60B00AF59FB /* UIViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 124A90462651B60B00AF59FB /* UIViewController+Extensions.swift */; };
 		124A904C2651BA1600AF59FB /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 124A904B2651BA1600AF59FB /* RealmManager.swift */; };
 		124A90502651BA9500AF59FB /* Todo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 124A904F2651BA9400AF59FB /* Todo.swift */; };
+		12ED4D6F2651FE6E005EF5D6 /* TodoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12ED4D6E2651FE6E005EF5D6 /* TodoCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		124A90462651B60B00AF59FB /* UIViewController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extensions.swift"; sourceTree = "<group>"; };
 		124A904B2651BA1600AF59FB /* RealmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmManager.swift; sourceTree = "<group>"; };
 		124A904F2651BA9400AF59FB /* Todo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Todo.swift; sourceTree = "<group>"; };
+		12ED4D6E2651FE6E005EF5D6 /* TodoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,6 +72,7 @@
 				124A90292651B4A500AF59FB /* AppDelegate.swift */,
 				124A902B2651B4A500AF59FB /* SceneDelegate.swift */,
 				124A902D2651B4A500AF59FB /* TodoListVC.swift */,
+				12ED4D6E2651FE6E005EF5D6 /* TodoCell.swift */,
 				124A90322651B4A700AF59FB /* Assets.xcassets */,
 				124A90342651B4A700AF59FB /* LaunchScreen.storyboard */,
 				124A90372651B4A700AF59FB /* Info.plist */,
@@ -179,6 +182,7 @@
 			files = (
 				124A90472651B60B00AF59FB /* UIViewController+Extensions.swift in Sources */,
 				124A90502651BA9500AF59FB /* Todo.swift in Sources */,
+				12ED4D6F2651FE6E005EF5D6 /* TodoCell.swift in Sources */,
 				124A902E2651B4A500AF59FB /* TodoListVC.swift in Sources */,
 				124A904C2651BA1600AF59FB /* RealmManager.swift in Sources */,
 				124A902A2651B4A500AF59FB /* AppDelegate.swift in Sources */,
