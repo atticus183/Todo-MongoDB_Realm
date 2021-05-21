@@ -10,10 +10,14 @@ import UIKit
 
 class TodoListVC: UIViewController {
 
-    let realm = try! Realm(configuration: RealmManager.shared.configuration)
+    var realm: Realm?
 
+    let realmService = DefaultRealmService()
+
+    ///  Listens for changes to `Todo` objects.
     var notificationToken: NotificationToken?
 
+    /// A collection of `Todo`s
     var todos: Results<Todo>?
 
     let addButton: UIButton = {
@@ -47,12 +51,16 @@ class TodoListVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        realm = DefaultRealmService.getRealm()
+
         title = "Todos"
         view.backgroundColor = .systemBackground
+        let barButton = UIBarButtonItem(title: "Log Out", style: .plain, target: self, action: #selector(logOut))
+        navigationItem.leftBarButtonItem = barButton
 
-        print("Local realm: \(String(describing: realm.configuration.fileURL))")
+        print("Local realm: \(String(describing: realm?.configuration.fileURL))")
 
-        todos = realm.objects(Todo.self)
+        todos = realm?.objects(Todo.self)
 
         todoTableView.delegate = self
         todoTableView.dataSource = self
@@ -108,10 +116,23 @@ class TodoListVC: UIViewController {
 
     @objc func addBtnTapped() {
         guard let enteredTodo = enterTodoTextField.text else { return }
-        Todo.add(in: realm, text: enteredTodo)
+        Todo.add(in: realm!, text: enteredTodo)
         enterTodoTextField.text = ""
     }
 
+    @objc func logOut() {
+        realmService.signOut { result in
+            switch result {
+            case .success():
+                DispatchQueue.main.async {
+                    UIApplication.shared.windows.first?.rootViewController = LoginVC()
+                    UIApplication.shared.windows.first?.makeKeyAndVisible()
+                }
+            case .failure(let error):
+                print("Error logging out: \(error.localizedDescription)")
+            }
+        }
+    }
 }
 
 extension TodoListVC: UITableViewDataSource, UITableViewDelegate {
@@ -128,14 +149,14 @@ extension TodoListVC: UITableViewDataSource, UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let todo = todos?[indexPath.row] else { return }
-        Todo.toggleCompleted(in: realm, todo: todo)
+        Todo.toggleCompleted(in: realm!, todo: todo)
     }
 
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         switch editingStyle {
         case .delete:
             guard let todo = todos?[indexPath.row] else { return }
-            Todo.delete(in: realm, todo: todo)
+            Todo.delete(in: realm!, todo: todo)
         default:
             return
         }

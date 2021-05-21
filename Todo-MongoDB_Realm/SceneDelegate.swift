@@ -16,10 +16,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         window = UIWindow(frame: windowScene.coordinateSpace.bounds)
         window?.windowScene = windowScene
-        let navigationController = UINavigationController(rootViewController: TodoListVC())
-        navigationController.navigationBar.prefersLargeTitles = true
-        window?.rootViewController = navigationController
-        window?.makeKeyAndVisible()
+
+        if let _ = DefaultRealmService.app.currentUser {
+            let navigationController = UINavigationController(rootViewController: TodoListVC())
+            navigationController.navigationBar.prefersLargeTitles = true
+            window?.rootViewController = navigationController
+            window?.makeKeyAndVisible()
+        } else {
+            window?.rootViewController = LoginVC()
+            window?.makeKeyAndVisible()
+        }
     }
 }
 

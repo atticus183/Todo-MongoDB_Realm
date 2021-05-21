@@ -10,8 +10,8 @@ import RealmSwift
 
 @objcMembers
 class Todo: Object {
-    dynamic var _id: String = ""
-    dynamic var _partition: String = ""
+    dynamic var _id: String = UUID().uuidString
+    dynamic var _partition: String = DefaultRealmService.partitionKeyToAssign
 
     dynamic var title: String = ""
     dynamic var isCompleted: Bool = false
@@ -20,9 +20,12 @@ class Todo: Object {
 
     convenience init(title: String) {
         self.init()
-        self._id = UUID().uuidString
         // initialize _partition value with the user's UUID.
         self.title = title
+    }
+
+    override static func primaryKey() -> String? {
+        return "_id"
     }
 }
 
@@ -59,6 +62,7 @@ extension Todo {
     static func toggleCompleted(in realm: Realm, todo: Todo) {
         try! realm.write {
             todo.isCompleted.toggle()
+            todo.dateCompleted = todo.isCompleted ? Date() : nil
         }
     }
 }
