@@ -5,6 +5,7 @@
 //  Created by Josh R on 5/16/21.
 //
 
+import Combine
 import RealmSwift
 
 protocol RealmService {
@@ -20,7 +21,9 @@ protocol RealmService {
     func signOut(completion: @escaping (Result<Void, Error>) -> Void)
 }
 
-class DefaultRealmService: RealmService {
+class DefaultRealmService: RealmService, ObservableObject {
+//    @Published var isSignInSuccessful: Bool = false
+
     static var app: App = App(id: appID)
 
     // If the build is failing, add the App ID here as a string.  The Constants file is not tracked by Git.

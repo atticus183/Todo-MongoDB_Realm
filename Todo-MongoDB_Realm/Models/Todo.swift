@@ -9,9 +9,9 @@ import Foundation
 import RealmSwift
 
 @objcMembers
-class Todo: Object {
+class Todo: Object, ObjectKeyIdentifiable {
     dynamic var _id: String = UUID().uuidString
-    dynamic var _partition: String = DefaultRealmService.partitionKeyToAssign
+    dynamic var _partition: String = ""
 
     dynamic var title: String = ""
     dynamic var isCompleted: Bool = false

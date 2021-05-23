@@ -19,8 +19,8 @@ class User: Object {
 
     convenience init(user: String) {
         self.init()
-        self._id = DefaultRealmService.userID
-        self._partition = DefaultRealmService.partitionKeyToAssign
+//        self._id = DefaultRealmService.userID
+//        self._partition = DefaultRealmService.partitionKeyToAssign
         self.name = user
     }
 }
